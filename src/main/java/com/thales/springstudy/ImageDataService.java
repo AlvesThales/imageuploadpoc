@@ -1,6 +1,7 @@
 package com.thales.springstudy;
 
 
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +18,10 @@ public class ImageDataService {
 
     private static final long MAX_FILE_SIZE = 4194304;
 
-    public String uploadImage(MultipartFile file)  throws IllegalStateException {
+    public String uploadImage(MultipartFile file)  throws FileSizeLimitExceededException {
 
         if (file.getSize() > MAX_FILE_SIZE) {
-            throw new IllegalStateException("File size exceeded. Please upload a picture smaller than 4mb.");
+            throw new FileSizeLimitExceededException("File size exceeded. Please upload a picture smaller than 4mb.", file.getSize(), MAX_FILE_SIZE);
         }
 
         try {

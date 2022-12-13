@@ -1,5 +1,6 @@
 package com.thales.springstudy;
 
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,8 +23,8 @@ public class ImageDataController {
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(response);
-        } catch (IllegalStateException exception) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        } catch (FileSizeLimitExceededException exception) {
+            return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
                     .body(exception);
         }
     }
